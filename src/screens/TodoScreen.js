@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native';
 import {FontAwesome, AntDesign} from '@expo/vector-icons';
-import {THEME} from '../theme';
+import {Constants} from '../constants';
 import {AppCard} from '../components/ui/AppCard';
 import {EditModal} from "../components/EditModal";
 import {AppText} from "../components/ui/AppText";
@@ -36,11 +36,11 @@ export const TodoScreen = ({ goBack, onRemove, onSave }) => {
                 </AppButton>
             </AppCard>
             <View style={styles.buttons}>
-                <AppButton onPress={() => changeScreen(null)} color={THEME.GREY_COLOR}>
+                <AppButton onPress={() => changeScreen(null)} color={Constants.GREY_COLOR}>
                     <AntDesign name="back" size={20} color="#fff" />
                 </AppButton>
 
-                <AppButton color={THEME.DANGER_COLOR} onPress={() => removeTodo(todo.id)}>
+                <AppButton color={Constants.DANGER_COLOR} onPress={() => removeTodo(todo.id)}>
                    <FontAwesome name="remove" size={20} color="#fff" />
                 </AppButton>
             </View>

@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import { Navbar } from './components/Navbar';
-import { THEME } from "./theme";
+import { Constants } from "./constants";
 import { MainScreen } from './screens/MainScreen';
 import { TodoScreen } from './screens/TodoScreen';
 import { ScreenContext } from "./context/screen/ScreenContext";
@@ -21,7 +21,7 @@ export const MainLayout = () => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: THEME.PADDING_HORIZONTAL,
+        paddingHorizontal: Constants.PADDING_HORIZONTAL,
         paddingVertical: 20
     }
 })

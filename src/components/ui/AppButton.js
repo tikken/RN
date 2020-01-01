@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, TouchableNativeFeedback, Platform} from 'react-native';
 import {AppText} from "./AppText";
-import {THEME} from "../../theme";
+import {Constants} from "../../constants";
 
-export const AppButton = ({ children, onPress, color = THEME.MAIN_COLOR }) => {
+export const AppButton = ({ children, onPress, color = Constants.MAIN_COLOR }) => {
     //funny
     const Wrapper = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
 

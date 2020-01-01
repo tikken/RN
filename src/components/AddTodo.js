@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { View, StyleSheet, TextInput, Alert, Keyboard } from 'react-native'
-import {THEME} from "../theme";
+import {Constants} from "../constants";
 import { AntDesign } from '@expo/vector-icons';
 
 export const AddTodo = ({ onSubmit }) => {
@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
         padding: 10,
         borderStyle: 'solid',
         borderBottomWidth: 2,
-        borderBottomColor: THEME.MAIN_COLOR
+        borderBottomColor: Constants.MAIN_COLOR
     }
 })

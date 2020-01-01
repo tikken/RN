@@ -1,19 +1,25 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { StyleSheet, View, FlatList, Image, Dimensions } from 'react-native';
 import { AddTodo } from '../components/AddTodo';
 import { Todo } from '../components/Todo';
-import { THEME } from "../theme";
+import { Constants } from "../constants";
 import { TodoContext } from "../context/todo/todoContext";
 import {ScreenContext} from "../context/screen/ScreenContext";
 
 export const MainScreen = ({ openTodo }) => {
-    const { addTodo, todos, removeTodo } = useContext(TodoContext);
+    const { addTodo, todos, removeTodo, fetchTodos, loading, error } = useContext(TodoContext);
     const { changeScreen } = useContext(ScreenContext);
-    const [ deviceWidth, setDeviceWidth ] = useState(Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2);
+    const [ deviceWidth, setDeviceWidth ] = useState(Dimensions.get('window').width - Constants.PADDING_HORIZONTAL * 2);
+
+    const loadTodos = useCallback(async () => await fetchTodos(), [fetchTodos]);
+
+    useEffect(() => {
+        loadTodos()
+    }, []);
 
     useEffect(() => {
         const update = () => {
-            const width = Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2
+            const width = Dimensions.get('window').width - Constants.PADDING_HORIZONTAL * 2
             setDeviceWidth(width)
         }
 
@@ -22,7 +28,7 @@ export const MainScreen = ({ openTodo }) => {
         return () => {
             Dimensions.removeEventListener('change', update)
         }
-    })
+    });
 
     let content = (
         //adaptivness
@@ -52,7 +58,7 @@ export const MainScreen = ({ openTodo }) => {
             <AddTodo onSubmit={addTodo} />
             {content}
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({

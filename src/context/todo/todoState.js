@@ -3,13 +3,14 @@ import {TodoContext} from "./todoContext";
 import {Alert} from 'react-native';
 import {todoReducer} from "./todoReducer";
 import {ScreenContext} from "../screen/ScreenContext";
+import {URLS} from "../../constants";
 import {
     ADD_TODO,
     REMOVE_TODO,
     UPDATE_TODO,
     SHOW_LOADER,
     HIDE_LOADER,
-    SHOW_ERROR
+    SHOW_ERROR, FETCH_TODOS
 } from "../types";
 
 export const TodoState = ({ children }) => {
@@ -23,7 +24,7 @@ export const TodoState = ({ children }) => {
     const [state, dispatch] = useReducer(todoReducer, initialState);
 
     const addTodo = async title => {
-        const response = await fetch('https://trattattoo.firebaseio.com/todos.json', {
+        const response = await fetch(URLS.FIREBASE, {
             method: 'POST',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({ title })
@@ -57,6 +58,22 @@ export const TodoState = ({ children }) => {
         )
     }
 
+    const fetchTodos = async () => {
+        const response = await fetch(URLS.FIREBASE, {
+            method: 'GET',
+            headers: { 'Content-type': 'application/json' }
+        })
+
+        const data = await response.json()
+
+        console.log('Fetch data', data)
+
+        const todos = Object.keys(data).map(key => ({ ...data[key], id: key }))
+
+        setTimeout(() => dispatch({ type: FETCH_TODOS, todos }), 200)
+
+    }
+
     const updateTodo = (id, title) => dispatch({ type: UPDATE_TODO, id, title });
     const showLoader = () => dispatch({ type: SHOW_LOADER });
     const hideLoader = () => dispatch({ type: HIDE_LOADER });
@@ -66,9 +83,12 @@ export const TodoState = ({ children }) => {
     return <TodoContext.Provider
             value={{
                 todos: state.todos,
+                loading: state.loading,
+                error: state.error,
                 addTodo,
                 removeTodo,
-                updateTodo
+                updateTodo,
+                fetchTodos
             }}>
             {children}
             </TodoContext.Provider>

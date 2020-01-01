@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, Platform } from 'react-native';
-import {THEME} from '../theme';
+import {Constants} from '../constants';
 
 export const Navbar = ({ title }) => {
     return (
@@ -26,14 +26,14 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     navbarAndroid: {
-        backgroundColor: THEME.MAIN_COLOR,
+        backgroundColor: Constants.MAIN_COLOR,
     },
     navbarIOS: {
-        borderBottomColor: THEME.MAIN_COLOR,
+        borderBottomColor: Constants.MAIN_COLOR,
         borderBottomWidth: 1
     },
     text: {
-        color: Platform.OS == 'ios' ? THEME.MAIN_COLOR : 'black',
+        color: Platform.OS == 'ios' ? Constants.MAIN_COLOR : 'black',
         fontSize: 20,
         fontFamily: 'tattoo'
     }

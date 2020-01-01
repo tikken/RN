@@ -51,7 +51,11 @@ export const TodoState = ({ children }) => {
                 {
                     text: 'Deleting',
                     style: 'Destructive',
-                    onPress: () => {
+                    onPress: async () => {
+                        await fetch(`${URLS.FIREBASE_ID}/${id}.json`, {
+                            method: 'DELETE',
+                            heaers: {'Content-type': 'aplication/json'}
+                        })
                         changeScreen(null)
                         dispatch({ type: REMOVE_TODO, id })
                     }

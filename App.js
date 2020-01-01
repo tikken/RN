@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import {MainLayout} from './src/MainLayout';
-import {AppLoading} from 'expo';
 import * as Font from 'expo-font';
-import {TodoState} from "./src/context/todo/todoState";
+import React, { useState } from 'react';
+
+import { MainLayout } from './src/MainLayout';
+import { AppLoading } from 'expo';
+import { TodoState } from "./src/context/todo/todoState";
+import { ScreenState } from "./src/context/screen/ScreenState";
 
 async function loadFont() {
    await Font.loadAsync({
@@ -22,8 +24,10 @@ export default function App() {
     }
 
     return (
-        <TodoState>
-            <MainLayout/>
-        </TodoState>
+        <ScreenState>
+            <TodoState>
+                <MainLayout/>
+            </TodoState>
+        </ScreenState>
     )
 }

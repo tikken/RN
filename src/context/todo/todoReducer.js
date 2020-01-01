@@ -1,4 +1,12 @@
-import {REMOVE_TODO, ADD_TODO, UPDATE_TODO} from "../types";
+import {
+    ADD_TODO,
+    REMOVE_TODO,
+    UPDATE_TODO,
+    SHOW_LOADER,
+    HIDE_LOADER,
+    SHOW_ERROR,
+    CLEAR_ERROR,
+    FETCH_TODOS } from "../types";
 
 const handlers = {
     [ADD_TODO]: (state, {title}) => ({
@@ -20,6 +28,11 @@ const handlers = {
             return todo
         })}
     ),
+    [SHOW_LOADER]: state => ({ ...state, loading: true }),
+    [HIDE_LOADER]: state => ({ ...state, loading: false }),
+    [CLEAR_ERROR]: state => ({ ...state, error: null }),
+    [SHOW_ERROR]: (state, { error }) => ({ ...state, error: error }),
+    [FETCH_TODOS]: (state, { todos }) => ({ ...state, todos }),
     DEFAULT: state => state
 };
 

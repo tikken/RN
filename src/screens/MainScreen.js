@@ -4,7 +4,8 @@ import { AddTodo } from '../components/AddTodo';
 import { Todo } from '../components/Todo';
 import { Constants } from "../constants";
 import { TodoContext } from "../context/todo/todoContext";
-import {ScreenContext} from "../context/screen/ScreenContext";
+import { ScreenContext } from "../context/screen/ScreenContext";
+import { AppLoader } from "../components/ui/AppLoader";
 
 export const MainScreen = ({ openTodo }) => {
     const { addTodo, todos, removeTodo, fetchTodos, loading, error } = useContext(TodoContext);
@@ -30,13 +31,19 @@ export const MainScreen = ({ openTodo }) => {
         }
     });
 
+    if(loading) {
+        return <AppLoader />
+    }
+
     let content = (
         //adaptivness
         <View style={{ width: deviceWidth }}>
             <FlatList
                 keyExtractor={item => item.id.toString()}
                 data={todos}
-                renderItem={({item}) => <Todo todo={item} onRemove={removeTodo} onOpen={changeScreen} />}
+                renderItem={({item}) => <Todo todo={item}
+                                              onRemove={removeTodo}
+                                              onOpen={changeScreen} />}
             />
         </View>
     );

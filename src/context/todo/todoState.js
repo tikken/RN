@@ -59,6 +59,8 @@ export const TodoState = ({ children }) => {
     }
 
     const fetchTodos = async () => {
+        showLoader()
+
         const response = await fetch(URLS.FIREBASE, {
             method: 'GET',
             headers: { 'Content-type': 'application/json' }
@@ -70,8 +72,9 @@ export const TodoState = ({ children }) => {
 
         const todos = Object.keys(data).map(key => ({ ...data[key], id: key }))
 
-        setTimeout(() => dispatch({ type: FETCH_TODOS, todos }), 200)
+        dispatch({ type: FETCH_TODOS, todos })
 
+        hideLoader()
     }
 
     const updateTodo = (id, title) => dispatch({ type: UPDATE_TODO, id, title });

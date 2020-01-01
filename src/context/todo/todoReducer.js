@@ -9,9 +9,9 @@ import {
     FETCH_TODOS } from "../types";
 
 const handlers = {
-    [ADD_TODO]: (state, {title}) => ({
+    [ADD_TODO]: (state, {title, id}) => ({
         ...state, todos: [...state.todos, {
-            id: Date.now().toString(),
+            id,
             title
         }]
     }),

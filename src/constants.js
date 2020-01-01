@@ -6,5 +6,6 @@ export const Constants = {
 }
 
 export const URLS = {
-    FIREBASE: 'https://trattattoo.firebaseio.com/todos.json'
+    FIREBASE: 'https://trattattoo.firebaseio.com/todos.json',
+    FIREBASE_ID: 'https://trattattoo.firebaseio.com/todos'
 }

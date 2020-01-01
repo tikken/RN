@@ -10,7 +10,9 @@ import {
     UPDATE_TODO,
     SHOW_LOADER,
     HIDE_LOADER,
-    SHOW_ERROR, FETCH_TODOS
+    SHOW_ERROR,
+    CLEAR_ERROR,
+    FETCH_TODOS
 } from "../types";
 
 export const TodoState = ({ children }) => {
@@ -60,27 +62,47 @@ export const TodoState = ({ children }) => {
 
     const fetchTodos = async () => {
         showLoader()
+        clearError()
 
-        const response = await fetch(URLS.FIREBASE, {
-            method: 'GET',
-            headers: { 'Content-type': 'application/json' }
-        })
+        try {
+            const response = await fetch(URLS.FIREBASE, {
+                method: 'GET',
+                headers: { 'Content-type': 'application/json' }
+            })
 
-        const data = await response.json()
+            const data = await response.json()
 
-        console.log('Fetch data', data)
+            console.log('Fetch data', data)
 
-        const todos = Object.keys(data).map(key => ({ ...data[key], id: key }))
+            const todos = Object.keys(data).map(key => ({ ...data[key], id: key }))
 
-        dispatch({ type: FETCH_TODOS, todos })
+            dispatch({ type: FETCH_TODOS, todos })
 
-        hideLoader()
+        } catch(e) {
+            showError('Что-то пошло не так...')
+        } finally {
+            hideLoader()
+        }
     }
 
-    const updateTodo = (id, title) => dispatch({ type: UPDATE_TODO, id, title });
+    const updateTodo = async (id, title) => {
+        try {
+            await fetch(`${URLS.FIREBASE_ID}/${id}.json`, {
+                method: 'PATCH',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({title})
+            })
+
+            dispatch({ type: UPDATE_TODO, id, title })
+        } catch(e) {
+            showError('Что-то пошло не так...')
+            console.log(e)
+        }
+    }
+
     const showLoader = () => dispatch({ type: SHOW_LOADER });
     const hideLoader = () => dispatch({ type: HIDE_LOADER });
-    const showError = () => dispatch({ type: SHOW_ERROR, error });
+    const showError = (error) => dispatch({ type: SHOW_ERROR, error });
     const clearError = () => dispatch({ type: CLEAR_ERROR });
 
     return <TodoContext.Provider

@@ -6,6 +6,7 @@ import { Constants } from "../constants";
 import { TodoContext } from "../context/todo/todoContext";
 import { ScreenContext } from "../context/screen/ScreenContext";
 import { AppLoader } from "../components/ui/AppLoader";
+import {AppText} from "../components/ui/AppText";
 
 export const MainScreen = ({ openTodo }) => {
     const { addTodo, todos, removeTodo, fetchTodos, loading, error } = useContext(TodoContext);
@@ -33,6 +34,9 @@ export const MainScreen = ({ openTodo }) => {
 
     if(loading) {
         return <AppLoader />
+    }
+    if(error) {
+        return (<View><AppText>fuck off</AppText></View>)
     }
 
     let content = (

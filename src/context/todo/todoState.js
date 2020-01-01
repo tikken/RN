@@ -98,6 +98,7 @@ export const TodoState = ({ children }) => {
             })
 
             dispatch({ type: UPDATE_TODO, id, title })
+
         } catch(e) {
             showError('Что-то пошло не так...')
             console.log(e)
